@@ -80,7 +80,7 @@ def build_face(rx, ry, now, big):
 
 
 def render(cols, rows, now):
-    big_time = rows >= 34
+    big_time = rows >= 40
     text_rows = 7 if big_time else 3
 
     ry = (rows - text_rows - 3) // 2
@@ -89,7 +89,7 @@ def render(cols, rows, now):
     if rx < 6 or ry < 3:
         return "Terminal too small - please enlarge it."
 
-    big_numbers = ry >= 11 and rx >= 22
+    big_numbers = ry >= 11 and rx >= 30
     grid = build_face(rx, ry, now, big_numbers)
 
     pad = " " * ((cols - (2 * rx + 1)) // 2)
@@ -97,11 +97,11 @@ def render(cols, rows, now):
              for row in grid]
 
     lines.append("")
-    if big_time:
-        for row in big_text(now.strftime("%H:%M:%S")):
-            lines.append(BOLD + CYAN + row.center(cols) + RESET)
-    else:
-        lines.append(BOLD + CYAN + now.strftime("%I:%M:%S %p").center(cols) + RESET)
+    # if big_time:
+    #     for row in big_text(now.strftime("%H:%M:%S")):
+    #         lines.append(BOLD + CYAN + row.center(cols) + RESET)
+    # else:
+    lines.append(BOLD + CYAN + now.strftime("%I:%M:%S %p").center(cols) + RESET)
     lines.append(DIM + now.strftime("%A, %d %B %Y").center(cols) + RESET)
 
     top = max(0, (rows - len(lines)) // 2)
